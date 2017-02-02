@@ -117,16 +117,25 @@ TaskMgr::Task::~Task()
     (*i)->unref();
 }
 
-TaskMgr::TaskMgr() : _PendingLinkTask(NULL),_initStageFlag(false),
-		     _eventCBK(NULL) {}
+TaskMgr::TaskMgr(int priority) : 
+_PendingLinkTask(NULL),_initStageFlag(false),
+_eventCBK(NULL),
+_priority(priority),
+_sub_priority(0),
+_pool(NULL)
+{
+}
 
-TaskMgr::TaskMgr(const TaskMgr &aMgr) : _eventCBK(aMgr._eventCBK)
+TaskMgr::TaskMgr(const TaskMgr &aMgr) : 
+  _currentData(aMgr._currentData),
+  _eventCBK(aMgr._eventCBK),
+  _priority(aMgr._priority),
+  _sub_priority(0),
+  _pool(NULL)
 {
   for(StageTask::const_iterator i = aMgr._Tasks.begin();
       i != aMgr._Tasks.end();++i)
     _Tasks.push_back((*i)->copy());
-  _currentData = aMgr._currentData;
-  _eventCBK = aMgr._eventCBK;
 }
 
 TaskMgr::~TaskMgr()
@@ -199,7 +208,7 @@ TaskMgr::TaskWrap* TaskMgr::next()
 #define CHECK_END_STAGE()					\
   if(aTaskPt->_sinkTaskQueue.empty())				\
     {								\
-      PoolThreadMgr::get().removeProcess(this,false);		\
+      _pool->removeProcess(this,false);		\
       delete aTaskPt;						\
       _Tasks.pop_front();					\
     }								
@@ -264,7 +273,8 @@ void TaskMgr::_goToNextStage()
   else
     {
       _initStageFlag = false;
-      PoolThreadMgr::get().addProcess(this,false); // Re insert in the Poll
+      ++_sub_priority;
+      _pool->addProcess(this,false); // Re insert in the Poll
     }
 }
 
@@ -274,7 +284,7 @@ void TaskMgr::_callError(Data &aData,const char *msg)
     _eventCBK->error(aData,msg);
 }
 
-void TaskMgr::syncProcess()
+Data TaskMgr::syncProcess()
 {
   for(StageTask::iterator aStageTask = _Tasks.begin();
       aStageTask != _Tasks.end();++aStageTask)
@@ -301,4 +311,5 @@ void TaskMgr::syncProcess()
       delete aStageTaskPt;
     }
   _Tasks.clear();
+  return _currentData;
 }
