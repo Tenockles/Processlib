@@ -431,7 +431,7 @@ public:
     virtual void error(Data&,const char*);
   };
 
-  TaskMgr();
+  TaskMgr(int priority=0);
   TaskMgr(const TaskMgr&);
   ~TaskMgr();
 
@@ -439,7 +439,7 @@ public:
   void addSinkTask(int aStage,SinkTaskBase*);
   void setInputData(Data &);
   void setEventCallback(TaskMgr::EventCallback *);
-  void syncProcess();
+  Data syncProcess();
 };
 
 class PoolThreadMgr
