@@ -18,11 +18,13 @@
 	
     <profiles>    
         <profile>
-            <id>Lima_linux</id>
+            <id>linux_32</id>
             <activation>
-                <os>
-                    <family>Linux</family>
-                </os>
+                <activeByDefault>true</activeByDefault>                
+                <property>
+                    <name>env</name>
+                    <value>linux_32</value>
+                </property>
             </activation>
             <dependencies>
                 <dependency>
@@ -30,14 +32,51 @@
                     <artifactId>GSL-${aol}-shared-release</artifactId>
                 </dependency>
             </dependencies>
+            
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.freehep</groupId>
+                        <artifactId>freehep-nar-plugin</artifactId>
+                        <configuration>
+                            <cpp>
+                                <sourceDirectory>${project.basedir}</sourceDirectory>
+                                <includes>
+                                    <include>core/src/*.cpp</include>
+                                    <include>tasks/src/*.cpp</include>
+                                </includes>
+                                <includePaths>
+                                    <includePath>core/include</includePath>
+                                    <includePath>tasks/include</includePath>
+                                </includePaths>
+                            </cpp>
+                            <libraries>
+                                <library>
+                                    <type>shared</type>
+                                </library>
+                            </libraries>                                    
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>fr.soleil.maven.plugins</groupId>
+                        <artifactId>maven-check-plugin</artifactId>
+                        <configuration>
+                            <enable>false</enable>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+                
         </profile>
 
         <profile>
-            <id>Lima_windows</id>
-            <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
+            <id>win_32</id>
+            <activation>            
+                <activeByDefault>false</activeByDefault>                
+                <property>
+                    <name>env</name>
+                    <value>win_32</value>
+                </property>
             </activation>
             <dependencies>
                 <dependency>
@@ -45,30 +84,15 @@
                     <artifactId>GSL-${aol}-static-release</artifactId>
                 </dependency>
             </dependencies>
-        </profile>
-    </profiles>    
-	
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.freehep</groupId>
-                <artifactId>freehep-nar-plugin</artifactId>
-                <configuration>
-                    <cpp>
-                        <sourceDirectory>${project.basedir}</sourceDirectory>
-                    </cpp>
-                    <libraries>
-                        <library>
-                            <type>shared</type>
-                        </library>
-                    </libraries>
-                    <specificConfigurations>
-                        <specificConfiguration>
-                            <id>win32 platform</id>
-                            <activation>
-                                <os>Windows</os>
-                            </activation>
+            
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.freehep</groupId>
+                        <artifactId>freehep-nar-plugin</artifactId>
+                        <configuration>
                             <cpp>
+                                <sourceDirectory>${project.basedir}</sourceDirectory>
                                 <includes>
                                     <include>core/src/*.cpp</include>
                                     <include>core/src/WindowSpecific/*.cpp</include>
@@ -88,35 +112,26 @@
                                     <define>_WIN32_WINNT=0x0502</define> <!-- Windows XP -->
                                 </defines>
                             </cpp>
-                        </specificConfiguration>
-                        <specificConfiguration>
-                            <id>linux platform</id>
-                            <activation>
-                                <os>Linux</os>
-                            </activation>
-                            <cpp>
-                                <includes>
-                                    <include>core/src/*.cpp</include>
-                                    <include>tasks/src/*.cpp</include>
-                                </includes>
-                                <includePaths>
-                                    <includePath>core/include</includePath>
-                                    <includePath>tasks/include</includePath>
-                                </includePaths>
-                            </cpp>
-                        </specificConfiguration>
-                    </specificConfigurations>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>fr.soleil.maven.plugins</groupId>
-                <artifactId>maven-check-plugin</artifactId>
-                <configuration>
-                    <enable>false</enable>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+                            
+                            <libraries>
+                                <library>
+                                    <type>shared</type>
+                                </library>
+                            </libraries>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>fr.soleil.maven.plugins</groupId>
+                        <artifactId>maven-check-plugin</artifactId>
+                        <configuration>
+                            <enable>false</enable>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+                
+        </profile>
+    </profiles>
 	
     <developers>
         <developer>
