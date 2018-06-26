@@ -224,7 +224,8 @@ template<class INPUT> static void _get_average_std(const Data& aData,
 {
   const INPUT *aSrcPt = (const INPUT*)aData.data();
   int widthStep = aData.dimensions[0];
-  INPUT aMin,aMax;
+  INPUT aMin,aMax;  
+  int xMin = 0; int yMin = 0;  int xMax = 0;  int yMax = 0;  
   aMin = aMax = *(aSrcPt + y * widthStep + x); // Init
   double aSum = 0.;
   for(int lineId = y;lineId < y + height;++lineId)
@@ -234,9 +235,17 @@ template<class INPUT> static void _get_average_std(const Data& aData,
 	{
 	  aSum += double(*aLinePt);
 	  if(*aLinePt > aMax)
+	  {
 	    aMax = *aLinePt;
+		xMax = i;
+		yMax = lineId-y;
+	  }
 	  else if(*aLinePt < aMin)
+	  {
 	    aMin = *aLinePt;
+		xMin = i;
+		yMin = lineId-y;
+	  }
 	}
     }
 
@@ -244,6 +253,10 @@ template<class INPUT> static void _get_average_std(const Data& aData,
   aResult.average = aSum / (width * height);
   aResult.minValue = double(aMin);
   aResult.maxValue = double(aMax);
+  aResult.minX = xMin;
+  aResult.minY = yMin;
+  aResult.maxX = xMax;
+  aResult.maxY = yMax;
 
   //STD
   aSum = 0.;
@@ -270,6 +283,7 @@ template<class INPUT> static void _get_average_std_with_mask(const Data& aData,
   const INPUT *aSrcPt = (INPUT*)aData.data();
   int widthStep = aData.dimensions[0];
   INPUT aMin = INPUT(0.),aMax = INPUT(0.);
+  int xMin = 0; int yMin = 0;  int xMax = 0;  int yMax = 0;  
   //min max init;
   bool continueFlag = true;
   for(int lineId = y;continueFlag && lineId < y + height;++lineId)
@@ -296,8 +310,18 @@ template<class INPUT> static void _get_average_std_with_mask(const Data& aData,
 	  if(*aMaskLinePt)
 	    {
 	      aSum += double(*aLinePt);
-	      if(*aLinePt > aMax) aMax = *aLinePt;
-	      else if(*aLinePt < aMin) aMin = *aLinePt;
+	      if(*aLinePt > aMax) 
+		  {
+			aMax = *aLinePt;
+			xMax = i;
+			yMax = lineId-y;			  
+		  }
+	      else if(*aLinePt < aMin) 
+		  {
+			aMin = *aLinePt;
+			xMin = i;
+			yMin = lineId-y;			  
+		  }
 	    }
 	  else
 	    --usedSize;
@@ -337,6 +361,10 @@ template<class INPUT> static void _get_average_std_with_mask(const Data& aData,
 
   aResult.minValue = aMin;
   aResult.maxValue = aMax;
+  aResult.minX = xMin;
+  aResult.minY = yMin;
+  aResult.maxX = xMax;
+  aResult.maxY = yMax;  
 }
 
 template<class INPUT> static void _lut_get_average_std(const Data& data,

@@ -37,6 +37,7 @@ namespace Tasks
     RoiCounterResult() : 
       sum(0.),average(0.),std(0.),
       minValue(0.),maxValue(0.),
+      minX(0),minY(0),maxX(0),maxY(0),
       frameNumber(-1),
       errorCode(RoiCounterManager::OK)
     {}
@@ -49,19 +50,27 @@ namespace Tasks
     double			 minValue;
     double			 maxValue;
     int                          frameNumber;
+    int minX;
+    int minY;
+    int maxX;
+    int maxY;
     RoiCounterManager::ErrorCode errorCode;
   };
 
   inline std::ostream& operator<<(std::ostream &os,const RoiCounterResult &aRoiResult)
   {
     os << "<"
-       << "frameNumber=" << aRoiResult.frameNumber << ", "
-       << "sum=" << aRoiResult.sum << ", "
-       << "average=" << aRoiResult.average << ", "
-       << "std=" << aRoiResult.std << ", "
-       << "minValue=" << aRoiResult.minValue << ", "
-       << "maxValue=" << aRoiResult.maxValue;
-    os << ">";
+       << "frameNumber="    << aRoiResult.frameNumber   << ", "
+       << "sum="            << aRoiResult.sum           << ", "
+       << "average="        << aRoiResult.average       << ", "
+       << "std="            << aRoiResult.std           << ", "
+       << "minValue="       << aRoiResult.minValue      << ", "
+       << "minX="           << aRoiResult.minX          << ", "
+       << "minY="           << aRoiResult.minY          << ", "
+       << "maxValue="       << aRoiResult.maxValue      << ", "
+       << "maxX="           << aRoiResult.maxX          << ", "            
+       << "maxY="           << aRoiResult.maxY          << ", "
+       << ">";
     return os;
   }
 
