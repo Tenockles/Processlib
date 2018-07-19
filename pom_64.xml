@@ -18,7 +18,7 @@
 	
 	<properties>
 		<!-- path to the 64 bits libs ${libs-64bits} -->
-        <libs-64bits>/home/informatique/ica/langlois/binaries-backup/el6-64</libs-64bits>
+        <libs-64bits>/home/informatique/ica/ica/LIB_EL6_64</libs-64bits>
 	</properties>
 	
     <profiles>    
@@ -29,12 +29,6 @@
                     <family>Linux</family>
                 </os>
             </activation>
-            <!-- <dependencies>
-                <dependency>
-                    <groupId>org.gnu</groupId>
-                    <artifactId>GSL-${aol}-shared-release</artifactId>
-                </dependency>
-            </dependencies> -->
         </profile>
 
         <profile>
@@ -45,10 +39,10 @@
                 </os>
             </activation>
             <dependencies>
-                <dependency>
+<!--                <dependency>
                     <groupId>org.gnu</groupId>
                     <artifactId>GSL-${aol}-static-release</artifactId>
-                </dependency>
+                </dependency>-->
             </dependencies>
         </profile>
     </profiles>    
