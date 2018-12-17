@@ -30,21 +30,6 @@
                 </os>
             </activation>
         </profile>
-
-        <profile>
-            <id>Lima_windows</id>
-            <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
-            </activation>
-            <dependencies>
-<!--                <dependency>
-                    <groupId>org.gnu</groupId>
-                    <artifactId>GSL-${aol}-static-release</artifactId>
-                </dependency>-->
-            </dependencies>
-        </profile>
     </profiles>    
 	
     <build>
@@ -62,32 +47,6 @@
                         </library>
                     </libraries>
                     <specificConfigurations>
-                        <specificConfiguration>
-                            <id>win32 platform</id>
-                            <activation>
-                                <os>Windows</os>
-                            </activation>
-                            <cpp>
-                                <includes>
-                                    <include>core/src/*.cpp</include>
-                                    <include>core/src/WindowSpecific/*.cpp</include>
-                                    <include>tasks/src/*.cpp</include>
-                                </includes>
-                                <includePaths>
-                                    <includePath>core/include</includePath>
-                                    <includePath>core/include/WindowSpecific</includePath>
-                                    <includePath>tasks/include</includePath>	
-                                </includePaths>
-                                <defines>
-                                    <define>LIBPROCESSLIB_EXPORTS</define>
-                                    <define>WIN32</define>
-                                    <define>NDEBUG</define>
-                                    <define>_WINDOWS</define>
-                                    <define>_USRDLL</define>
-                                    <define>_WIN32_WINNT=0x0502</define> <!-- Windows XP -->
-                                </defines>
-                            </cpp>
-                        </specificConfiguration>
                         <specificConfiguration>
                             <id>linux platform</id>
                             <activation>
