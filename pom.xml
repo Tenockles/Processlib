@@ -10,7 +10,7 @@
    
     <groupId>fr.soleil.lib</groupId>
     <artifactId>LimaProcesslib-${aol}-shared-${mode}</artifactId>
-    <version>1.3.8</version>
+    <version>1.3.9</version>
 	
     <packaging>nar</packaging>
     <name>LimaProcesslib</name>
@@ -49,6 +49,9 @@
                                     <includePath>core/include</includePath>
                                     <includePath>tasks/include</includePath>
                                 </includePaths>
+                                <defines>
+                                    <!-- <define>WITHOUT_GSL</define> -->
+                                </defines>
                             </cpp>
                             <libraries>
                                 <library>
@@ -106,6 +109,9 @@
                                     <includePath>core/include</includePath>
                                     <includePath>tasks/include</includePath>
                                 </includePaths>
+                                <defines>
+                                    <!-- <define>WITHOUT_GSL</define> -->
+                                </defines>
                             </cpp>
                             <linker>
                                 <libs>
@@ -143,12 +149,12 @@
         </profile>
         
         <profile>
-            <id>win_32</id>
+            <id>win_32_vc12</id>
             <activation>            
                 <activeByDefault>false</activeByDefault>                
                 <property>
                     <name>env</name>
-                    <value>win_32</value>
+                    <value>win_32_vc12</value>
                 </property>
             </activation>
             <dependencies>
@@ -182,7 +188,7 @@
                                     <define>NDEBUG</define>
                                     <define>_WINDOWS</define>
                                     <define>_USRDLL</define>
-                                    <define>_WIN32_WINNT=0x0502</define> <!-- Windows XP -->
+                                    <define>_WIN32_WINNT=0x0502</define> <!-- Windows Server 2003 -->
                                 </defines>
                             </cpp>
                             
