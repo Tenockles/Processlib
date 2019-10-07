@@ -45,7 +45,13 @@
 
 
 //#define ssize_t int
+
+#ifdef _M_X64 
+typedef long long ssize_t;
+#else
 typedef int ssize_t;
+#endif
+
 #define usleep(val) ::Sleep(val/1000)
 
 #ifndef S_ISDIR
