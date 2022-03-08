@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+    <parent>
+        <groupId>fr.soleil</groupId>
+        <artifactId>super-pom-C-CPP</artifactId>
+        <version>21.2.5-64-el7</version>
+    </parent>
+   
+    <groupId>fr.soleil.lib</groupId>
+    <artifactId>LimaProcesslib-${aol}-el7-shared-${mode}</artifactId>
+    <version>1.3.9</version>
+	
+    <packaging>nar</packaging>
+    <name>LimaProcesslib</name>
+    <description>Processlib for Lima : binning,roi,flip, ...</description>
+	
+	<properties>
+		<!-- path to the 64 bits libs ${libs-64bits} -->
+        <libs-64bits>/home/informatique/ica/ica/LIB_EL7_64</libs-64bits>
+	</properties>
+	
+ 
+	
+    <build>
+        <plugins>
+     <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+			<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo>Displaying value of 'testproperty' property</echo>
+								<echo>[aol] ${aol}</echo>
+								<echo>[aol-assembly] ${aol-assembly}</echo>
+							</tasks>
+						</configuration>
+					</execution>
+        </executions>
+      </plugin>		
+            <plugin>
+                <groupId>org.freehep</groupId>
+                <artifactId>freehep-nar-plugin</artifactId>
+                <configuration>
+                    <cpp>
+                        <sourceDirectory>${project.basedir}</sourceDirectory>
+                    </cpp>
+                    <libraries>
+                        <library>
+                            <type>shared</type>
+                        </library>
+                    </libraries>
+                    <specificConfigurations>
+                        <specificConfiguration>
+                            <id>linux platform</id>
+                            <activation>
+                                <os>Linux</os>
+                            </activation>
+                            <cpp>
+                                <includes>
+                                    <include>core/src/*.cpp</include>
+                                    <include>tasks/src/*.cpp</include>
+                                </includes>
+                                <includePaths>
+                                    <includePath>core/include</includePath>
+                                    <includePath>tasks/include</includePath>
+                                    <includePath>${libs-64bits}/gsl-1.15-13.el7.x86_64/include</includePath>
+                                </includePaths>
+                            </cpp>
+                            <linker>
+                                <libs>
+                                    <lib>
+                                        <!-- gsl (1.15-13) 64-->
+                                        <name>gsl</name>
+                                        <type>shared</type>
+                                        <directory>${libs-64bits}/gsl-1.15-13.el7.x86_64/lib/</directory>
+                                    </lib>
+                                    <lib>
+                                        <!-- gsl (1.11) 64-->
+                                        <name>gslcblas</name>
+                                        <type>shared</type>
+                                        <directory>${libs-64bits}/gsl-1.15-13.el7.x86_64/lib/</directory>
+                                    </lib>
+                                </libs>
+                            </linker>
+                        </specificConfiguration>
+                    </specificConfigurations>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>fr.soleil.maven.plugins</groupId>
+                <artifactId>maven-check-plugin</artifactId>
+                <configuration>
+                    <enable>false</enable>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+	
+    <developers>
+        <developer>
+            <id>langlois</id>
+            <name>langlois</name>
+            <url>http://controle/</url>
+            <organization>Synchrotron Soleil</organization>
+            <organizationUrl>http://www.synchrotron-soleil.fr</organizationUrl>
+            <roles>
+                <role>manager</role>
+            </roles>
+            <timezone>1</timezone>
+        </developer>
+        <developer>
+            <id>noureddine</id>
+            <name>noureddine</name>
+            <url>http://controle/</url>
+            <organization>Synchrotron Soleil</organization>
+            <organizationUrl>http://www.synchrotron-soleil.fr</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>1</timezone>
+        </developer>
+    </developers>
+
+</project>
