@@ -10,7 +10,7 @@
    
     <groupId>fr.soleil.lib</groupId>
     <artifactId>LimaProcesslib-${aol}-shared-${mode}</artifactId>
-    <version>1.3.9</version>
+    <version>1.3.10</version>
 	
     <packaging>nar</packaging>
     <name>LimaProcesslib</name>
@@ -26,12 +26,12 @@
                     <value>linux_32</value>
                 </property>
             </activation>
-            <dependencies>
+            <!-- <dependencies>
                 <dependency>
                     <groupId>org.gnu</groupId>
                     <artifactId>GSL-${aol}-shared-release</artifactId>
                 </dependency>
-            </dependencies>
+            </dependencies> -->
             
             <build>
                 <plugins>
@@ -50,7 +50,7 @@
                                     <includePath>tasks/include</includePath>
                                 </includePaths>
                                 <defines>
-                                    <!-- <define>WITHOUT_GSL</define> -->
+                                    <define>WITHOUT_GSL</define>
                                 </defines>
                             </cpp>
                             <libraries>
@@ -81,12 +81,12 @@
                     <value>win_32_vc12</value>
                 </property>
             </activation>
-            <dependencies>
+            <!-- <dependencies>
                 <dependency>
                     <groupId>org.gnu</groupId>
                     <artifactId>GSL-${aol}-static-release</artifactId>
                 </dependency>
-            </dependencies>
+            </dependencies> -->
             
             <build>
                 <plugins>
@@ -113,6 +113,7 @@
                                     <define>_WINDOWS</define>
                                     <define>_USRDLL</define>
                                     <define>_WIN32_WINNT=0x0502</define> <!-- Windows Server 2003 -->
+									<define>WITHOUT_GSL</define>
                                 </defines>
                             </cpp>
                             

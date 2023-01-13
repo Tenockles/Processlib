@@ -10,7 +10,7 @@
    
     <groupId>fr.soleil.lib</groupId>
     <artifactId>LimaProcesslib-${aol}-el7-shared-${mode}</artifactId>
-    <version>1.3.9</version>
+    <version>1.3.10</version>
 	
     <packaging>nar</packaging>
     <name>LimaProcesslib</name>
@@ -29,18 +29,18 @@
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
 			<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<echo>Displaying value of 'testproperty' property</echo>
-								<echo>[aol] ${aol}</echo>
-								<echo>[aol-assembly] ${aol-assembly}</echo>
-							</tasks>
-						</configuration>
-					</execution>
+				<phase>validate</phase>
+				<goals>
+					<goal>run</goal>
+				</goals>
+				<configuration>
+					<tasks>
+						<echo>Displaying value of 'testproperty' property</echo>
+						<echo>[aol] ${aol}</echo>
+						<echo>[aol-assembly] ${aol-assembly}</echo>
+					</tasks>
+				</configuration>
+			</execution>
         </executions>
       </plugin>		
             <plugin>
@@ -69,25 +69,28 @@
                                 <includePaths>
                                     <includePath>core/include</includePath>
                                     <includePath>tasks/include</includePath>
-                                    <includePath>${libs-64bits}/gsl-1.15-13.el7.x86_64/include</includePath>
+                                    <!-- <includePath>${libs-64bits}/gsl-1.15-13.el7.x86_64/include</includePath> -->
                                 </includePaths>
+								<defines>
+                                    <define>WITHOUT_GSL</define>
+                                </defines>
                             </cpp>
-                            <linker>
+                           <!--  <linker>
                                 <libs>
-                                    <lib>
+                                    <lib> -->
                                         <!-- gsl (1.15-13) 64-->
-                                        <name>gsl</name>
+                                        <!-- <name>gsl</name>
                                         <type>shared</type>
                                         <directory>${libs-64bits}/gsl-1.15-13.el7.x86_64/lib/</directory>
                                     </lib>
-                                    <lib>
+                                    <lib> -->
                                         <!-- gsl (1.11) 64-->
-                                        <name>gslcblas</name>
+                                        <!-- <name>gslcblas</name>
                                         <type>shared</type>
                                         <directory>${libs-64bits}/gsl-1.15-13.el7.x86_64/lib/</directory>
                                     </lib>
                                 </libs>
-                            </linker>
+                            </linker> -->
                         </specificConfiguration>
                     </specificConfigurations>
                 </configuration>
